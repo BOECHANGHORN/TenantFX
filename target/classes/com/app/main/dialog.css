@@ -1,0 +1,13 @@
+
+.myDialog > .content.label{
+   -fx-alignment: center ;
+   -fx-font-size:25.0px;
+   -fx-padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+.success > .content.label{
+    -fx-text-fill: #0EE06E;
+}
+.error > .content.label{
+    -fx-text-fill: #E30517;
+}

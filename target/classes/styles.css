@@ -1,0 +1,17 @@
+.item{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.grey-text{
+    -fx-text-fill: #697684;
+}
+
+.clickable:hover{
+    -fx-cursor: hand;
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane onMouseClicked="#onClick" prefHeight="200.0" prefWidth="700.0" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PropertyRowController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="700.0" spacing="5.0">
+         <children>
+            <HBox prefHeight="54.0" prefWidth="680.0">
+               <children>
+                  <Label fx:id="nameLabel" alignment="TOP_LEFT" prefHeight="60.0" prefWidth="680.0" text="Lucentia Residence @ Bukit Bintang">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="670.0">
+               <children>
+                  <Label fx:id="addressLabel" prefHeight="74.0" prefWidth="668.0" text="No.22A, Jalan 2/125, Taman Desa Petaling, Desa Petaling, Kuala Lumpur" />
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="670.0">
+               <children>
+                  <Label fx:id="rateLabel" prefHeight="32.0" prefWidth="670.0" text="RM 720000" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label fx:id="buildingDetailLabel" minWidth="-Infinity" prefHeight="17.0" prefWidth="668.0" styleClass="grey-text" stylesheets="@../../../styles.css" text="Bungalow • 18186 sqft" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="83.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="111.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="74.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0" prefWidth="90.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="97.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="145.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="41.0" prefWidth="60.0" text="Room No:" />
+                              <Label fx:id="roomNumLabel" prefHeight="41.0" prefWidth="30.0" text="1" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label prefHeight="41.0" prefWidth="83.0" text="BathRoom No:" />
+                              <Label fx:id="bathRoomNumLabel" prefHeight="41.0" prefWidth="30.0" text="1" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="99.0" GridPane.columnIndex="2">
+                           <children>
+                              <Label prefHeight="41.0" prefWidth="44.0" text="TV No:" />
+                              <Label fx:id="tvNumLabel" prefHeight="41.0" prefWidth="11.0" text="1" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="110.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
+                           <children>
+                              <Label prefHeight="41.0" prefWidth="60.0" text="Fridge No:" />
+                              <Label fx:id="fridgeNumLabel" prefHeight="41.0" prefWidth="12.0" text="1" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="103.0" GridPane.columnIndex="4">
+                           <children>
+                              <Label prefHeight="31.0" prefWidth="76.0" text="Air Cond No:" />
+                              <Label fx:id="airCondNumLabel" prefHeight="31.0" prefWidth="20.0" text="1" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5">
+                           <children>
+                              <Label prefHeight="41.0" prefWidth="101.0" text="Water Heater No:" />
+                              <Label fx:id="waterHeaterNumLabel" prefHeight="41.0" prefWidth="30.0" text="1" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="670.0">
+               <children>
+                  <HBox prefHeight="31.0" prefWidth="79.0">
+                     <children>
+                        <Label prefHeight="31.0" prefWidth="38.0" text="WI-FI:" />
+                        <Label fx:id="wifiLabel" prefHeight="31.0" prefWidth="24.0" text="Yes" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="31.0" prefWidth="188.0">
+                     <children>
+                        <Label prefHeight="31.0" prefWidth="96.0" text="Swimming Pool:" />
+                        <Label fx:id="spLabel" prefHeight="31.0" prefWidth="30.0" text="No" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </VBox>
+   </children>
+   <styleClass>
+      <String fx:value="item" />
+      <String fx:value="clickable" />
+   </styleClass>
+</AnchorPane>
