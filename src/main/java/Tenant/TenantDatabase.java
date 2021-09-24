@@ -7,15 +7,16 @@ import Phone.Phone;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 public class TenantDatabase implements ReadWriteRole<Tenant> {
-    private final File FILE_PATH = new File(Initialization.CUR_PATH + "/tenant.CSV");
+    private final File FILE_PATH = new File(Initialization.CUR_PATH + "//tenant.CSV");
 
-    private final ArrayList<Tenant> tenantList;
+    private final TreeMap<Integer, Tenant> tenantList;
     private static final TenantDatabase instance = new TenantDatabase();
 
     private TenantDatabase () {
-        tenantList = new ArrayList<Tenant>();
+        tenantList = new TreeMap<Integer, Tenant>();
     }
 
     @Override
@@ -28,8 +29,13 @@ public class TenantDatabase implements ReadWriteRole<Tenant> {
     }
 
     @Override
+    public Tenant searchByID(int id) {
+        return tenantList.get(id);
+    }
+
+    @Override
     public Tenant searchUser(String userName) {
-        for (Tenant tenant : tenantList)
+        for (Tenant tenant : tenantList.values())
             if (tenant.getUserName().equals(userName))
                 return tenant;
         return null;
@@ -37,18 +43,18 @@ public class TenantDatabase implements ReadWriteRole<Tenant> {
 
     @Override
     public int getNewID() {
-        return tenantList.get(tenantList.size() - 1).getId() + 1;
+        return tenantList.lastKey() + 1;
     }
 
     //CRUD
     @Override
     public void create(Tenant tenant) {
-        tenantList.add(tenant);
+        tenantList.put(tenant.getId(), tenant);
         appendData(tenant);
     }
 
     @Override
-    public ArrayList<Tenant> read() {
+    public TreeMap<Integer, Tenant> read() {
         return tenantList;
     }
 
@@ -74,7 +80,7 @@ public class TenantDatabase implements ReadWriteRole<Tenant> {
             Phone phone = new Phone(rawRow.get(3));
 
             Tenant tenant = new Tenant(id, userName, password, phone);
-            tenantList.add(tenant);
+            tenantList.put(tenant.getId(), tenant);
         }
     }
 
@@ -93,7 +99,7 @@ public class TenantDatabase implements ReadWriteRole<Tenant> {
     public void writeData() {
         ArrayList<ArrayList<String>> rawData = new ArrayList<>();
 
-        for (Tenant tenant : tenantList)
+        for (Tenant tenant : tenantList.values())
             rawData.add(rawTenant(tenant));
 
         CSV.writeCSV(rawData, FILE_PATH);

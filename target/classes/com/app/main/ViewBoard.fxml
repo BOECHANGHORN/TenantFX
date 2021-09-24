@@ -64,7 +64,7 @@
          <children>
             <HBox prefHeight="40.0" prefWidth="941.0" spacing="720.0">
                <children>
-                  <Button mnemonicParsing="false" onMouseClicked="#onOpenFilterDialog" text="Open FIlters">
+                  <Button mnemonicParsing="false" onMouseClicked="#onOpenFilterDialog" text="Open FIlter">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin></Button>

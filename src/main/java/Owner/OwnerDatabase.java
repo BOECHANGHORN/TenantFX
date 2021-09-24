@@ -8,15 +8,16 @@ import Phone.Phone;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 public class OwnerDatabase implements ReadWriteRole<Owner> {
-    private final File FILE_PATH = new File(Initialization.CUR_PATH + "/owner.CSV");
+    private final File FILE_PATH = new File(Initialization.CUR_PATH + "//owner.CSV");
 
-    private final ArrayList<Owner> ownerList;
+    private final TreeMap<Integer, Owner> ownerList;
     private final static OwnerDatabase instance = new OwnerDatabase();
 
     private OwnerDatabase () {
-        ownerList = new ArrayList<Owner>();
+        ownerList = new TreeMap<Integer, Owner>();
     }
 
     @Override
@@ -29,30 +30,31 @@ public class OwnerDatabase implements ReadWriteRole<Owner> {
     }
 
     @Override
+    public Owner searchByID(int id) {
+        return ownerList.get(id);
+    }
+
+    @Override
     public Owner searchUser(String userName) {
-        for (Owner owner : ownerList)
+        for (Owner owner : ownerList.values())
             if (owner.getUserName().equals(userName))
                 return owner;
         return null;
     }
 
-    public ArrayList<Owner> getOwnerList() {
-        return ownerList;
-    }
-
     public int getNewID() {
-        return ownerList.get(ownerList.size() - 1).getId() + 1;
+        return ownerList.lastKey() + 1;
     }
 
     //CRUD
     @Override
     public void create(Owner owner) {
-        ownerList.add(owner);
+        ownerList.put(owner.getId(), owner);
         appendData(owner);
     }
 
     @Override
-    public ArrayList<Owner> read() {
+    public TreeMap<Integer, Owner> read() {
         return ownerList;
     }
 
@@ -78,7 +80,7 @@ public class OwnerDatabase implements ReadWriteRole<Owner> {
             Phone phone = new Phone(rawRow.get(3));
 
             Owner owner = new Owner(id, userName, password, phone);
-            ownerList.add(owner);
+            ownerList.put(owner.getId(), owner);
         }
     }
 
@@ -98,7 +100,7 @@ public class OwnerDatabase implements ReadWriteRole<Owner> {
     public void writeData() {
         ArrayList<ArrayList<String>> rawData = new ArrayList<>();
 
-        for (Owner owner : ownerList)
+        for (Owner owner : ownerList.values())
             rawData.add(rawOwner(owner));
 
         CSV.writeCSV(rawData, FILE_PATH);

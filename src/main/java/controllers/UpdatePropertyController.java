@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class UpdatePropertyController {
     @FXML
@@ -44,25 +44,25 @@ public class UpdatePropertyController {
     @FXML
     private Spinner<Integer> tvNum;
     private SpinnerValueFactory<Integer> tvNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
-
     @FXML
     private Spinner<Integer> fridgeNum;
     private SpinnerValueFactory<Integer> fridgeNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
     @FXML
     private Spinner<Integer> airConNum;
     private SpinnerValueFactory<Integer> airConNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
-
     @FXML
     private Spinner<Integer> waterHeaterNum;
     private SpinnerValueFactory<Integer> waterHeaterNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
-
     @FXML
     private TextField sizeTxt;
     @FXML
     private TextField rateTxt;
+    @FXML
+    private  CheckBox isPublished;
 
-    private ArrayList<Owner> ownerList = OwnerDatabase.getInstance().read();
-    private ArrayList<Agent> agentList = AgentDatabase.getInstance().read();
+    AppHolder holder = AppHolder.getInstance();
+    private TreeMap<Integer, Owner> ownerList = OwnerDatabase.getInstance().read();
+    private TreeMap<Integer, Agent> agentList = AgentDatabase.getInstance().read();
     private Property selectedProperty = AppHolder.getInstance().getSelectedProperty();
 
 
@@ -90,6 +90,7 @@ public class UpdatePropertyController {
                 double rate = Double.parseDouble(rateTxt.getText());
                 selectedProperty.setSize(size);
                 selectedProperty.setRate(rate);
+                selectedProperty.setPublished(isPublished.isSelected());
                 propertyDB.update(selectedProperty);
 
                 if (propertyDB.searchByID(selectedProperty.getId()) != null) {
@@ -106,27 +107,38 @@ public class UpdatePropertyController {
         if (selectedProperty != null) {
             RoleStringConverter roleStringConverter = new RoleStringConverter();
             PropertyTypeStringConverter propertyTypeStringConverter = new PropertyTypeStringConverter();
-            typeChoices.getItems().addAll(PropertyType.values());
-            typeChoices.setConverter(propertyTypeStringConverter);
-            ownerChoices.getItems().addAll(ownerList);
-            ownerChoices.setConverter(roleStringConverter);
-            agentChoices.getItems().addAll(agentList);
-            agentChoices.setConverter(roleStringConverter);
-            stateChoices.getItems().addAll(Utils.STATES);
             IntegerFormatter integerFormatter1 = new IntegerFormatter();
             IntegerFormatter integerFormatter2 = new IntegerFormatter();
             DoubleFormatter doubleFormatter = new DoubleFormatter();
 
-            postcode.setTextFormatter(integerFormatter1.getInstance());
-            sizeTxt.setTextFormatter(integerFormatter2.getInstance());
-            rateTxt.setTextFormatter(doubleFormatter.getInstance());
+            // Owner role only able to create property owned by himself/herself, same concepts applied for agent role
+            Role currentUser = holder.getUser();
+            if (currentUser != null) {
+                String role = currentUser.getRole();
+                if (role.equals("Owner")) {
+                    Owner ownerUser = OwnerDatabase.getInstance().searchByID(currentUser.getId()); //try get from OwnerDB
+                    ownerChoices.getItems().addAll(ownerUser);
+                    agentChoices.getItems().addAll(agentList.values());
 
+                } else if (role.equals("Agent")) {
+                    Agent agentUser = AgentDatabase.getInstance().searchByID(currentUser.getId()); //try get from AgentDB
+                    ownerChoices.getItems().addAll(selectedProperty.getOwner());
+                    agentChoices.getItems().addAll(agentUser);
+                }
+            }
+
+            typeChoices.getItems().addAll(PropertyType.values());
+            typeChoices.setConverter(propertyTypeStringConverter);
+            ownerChoices.setConverter(roleStringConverter);
+            agentChoices.setConverter(roleStringConverter);
+            stateChoices.getItems().addAll(Utils.STATES);
             name.setText(selectedProperty.getName());
             typeChoices.setValue(selectedProperty.getType());
             ownerChoices.setValue(selectedProperty.getOwner());
             agentChoices.setValue(selectedProperty.getAgent());
             stateChoices.setValue(selectedProperty.getAddress().getState());
             address.setText(selectedProperty.getAddress().getDetailAddress());
+            postcode.setTextFormatter(integerFormatter1.getInstance());
             postcode.setText(selectedProperty.getAddress().getPostalCode());
             wifi.setSelected(selectedProperty.getFacilities().isWifi());
             swimmingPool.setSelected(selectedProperty.getFacilities().isSwimmingPool());
@@ -142,8 +154,11 @@ public class UpdatePropertyController {
             airConNum.setValueFactory(airConNumVF);
             waterHeaterNumVF.setValue(selectedProperty.getFacilities().getWaterHeater());
             waterHeaterNum.setValueFactory(waterHeaterNumVF);
+            sizeTxt.setTextFormatter(integerFormatter2.getInstance());
             sizeTxt.setText(Integer.toString(selectedProperty.getSize()));
+            rateTxt.setTextFormatter(doubleFormatter.getInstance());
             rateTxt.setText(Double.toString(selectedProperty.getRate()));
+            isPublished.setSelected(selectedProperty.isPublished());
         }
 
     }

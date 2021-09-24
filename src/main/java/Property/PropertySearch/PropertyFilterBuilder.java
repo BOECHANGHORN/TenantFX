@@ -2,7 +2,8 @@ package Property.PropertySearch;
 
 import Agent.Agent;
 import Owner.Owner;
-import Property.*;
+import Property.PropertyAddress;
+import Property.PropertyType;
 
 public class PropertyFilterBuilder {
     private PropertyType type;
@@ -15,6 +16,8 @@ public class PropertyFilterBuilder {
     private PropertyAddress propertyAddress;
     private Double rentalLowBound;
     private Double rentalUpBound;
+    private Boolean published;
+    private Boolean sorted;
 
     public PropertyType getType() {
         return type;
@@ -103,6 +106,24 @@ public class PropertyFilterBuilder {
 
     public PropertyFilterBuilder setRentalUpBound(double rentalUpBound) {
         this.rentalUpBound = rentalUpBound;
+        return this;
+    }
+
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public PropertyFilterBuilder setPublished(Boolean published) {
+        this.published = published;
+        return this;
+    }
+
+    public Boolean getSorted() {
+        return sorted;
+    }
+
+    public PropertyFilterBuilder setSorted(Boolean sorted) {
+        this.sorted = sorted;
         return this;
     }
 

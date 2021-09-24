@@ -9,15 +9,16 @@ import Owner.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 public class PropertyDatabase implements ReadWrite<Property> {
-    private final File FILE_PATH = new File(Initialization.CUR_PATH + "/property.CSV");
+    private final File FILE_PATH = new File(Initialization.CUR_PATH + "//property.CSV");
 
-    private final ArrayList<Property> propertyList;
+    private final TreeMap<Integer, Property> propertyList;
     private static final PropertyDatabase instance = new PropertyDatabase();
 
     private PropertyDatabase() {
-        propertyList = new ArrayList<Property>();
+        propertyList = new TreeMap<Integer, Property>();
     }
 
     @Override
@@ -30,16 +31,16 @@ public class PropertyDatabase implements ReadWrite<Property> {
     }
 
     // All the methods require to create instances
-    private Owner getOwner(String ownerName) {
-        return OwnerDatabase.getInstance().searchUser(ownerName);
+    private Owner getOwner(int id) {
+        return OwnerDatabase.getInstance().searchByID(id);
     }
 
-    private Agent getAgent(String agentName) {
-        return AgentDatabase.getInstance().searchUser(agentName);
+    private Agent getAgent(int id) {
+        return AgentDatabase.getInstance().searchByID(id);
     }
 
-    private Tenant getTenant(String tenantName) {
-        return TenantDatabase.getInstance().searchUser(tenantName);
+    private Tenant getTenant(int id) {
+        return TenantDatabase.getInstance().searchByID(id);
     }
     //Done
 
@@ -84,26 +85,23 @@ public class PropertyDatabase implements ReadWrite<Property> {
     //Done
 
     public Property searchByID(int id) {
-        for (Property property : propertyList)
-            if (property.getId() == id)
-                return property;
-        return null;
+        return propertyList.get(id);
     }
 
     @Override
     public int getNewID() {
-        return propertyList.get(propertyList.size() - 1).getId() +1;
+        return propertyList.lastKey() + 1;
     }
 
     //CRUD
     @Override
     public void create(Property property) {
-        propertyList.add(property);
+        propertyList.put(property.getId(), property);
         appendData(property);
     }
 
     @Override
-    public ArrayList<Property> read() {
+    public TreeMap<Integer, Property> read() {
         return propertyList;
     }
 
@@ -126,8 +124,8 @@ public class PropertyDatabase implements ReadWrite<Property> {
         for (ArrayList<String> rawRow : rawData) {
             PropertyBuilder pb = new PropertyBuilder(Integer.parseInt(rawRow.get(0)), rawRow.get(1));
             pb.setType(PropertyType.valueOf(rawRow.get(2)));
-            pb.setOwner(getOwner(rawRow.get(3)));
-            pb.setAgent(getAgent(rawRow.get(4)));
+            pb.setOwner(getOwner(Integer.parseInt(rawRow.get(3))));
+            pb.setAgent(getAgent(Integer.parseInt(rawRow.get(4))));
             pb.setRoomNum(Integer.parseInt(rawRow.get(5)));
             pb.setBathRoomNum(Integer.parseInt(rawRow.get(6)));
             pb.setAddress(unpackAddress(rawRow.get(7)));
@@ -135,15 +133,16 @@ public class PropertyDatabase implements ReadWrite<Property> {
             pb.setFacilities(unpackFacilities(rawRow.get(9)));
 
             if (!rawRow.get(10).isEmpty())
-                pb.setTenant(getTenant(rawRow.get(10)));
+                pb.setTenant(getTenant(Integer.parseInt(rawRow.get(10))));
 
             if (!rawRow.get(11).isEmpty())
                 pb.setComment(rawRow.get(11));
 
             pb.setRate(Double.parseDouble(rawRow.get(12)));
+            pb.setPublished(rawRow.get(13).equals("t"));
 
             Property property = new Property(pb);
-            propertyList.add(property);
+            propertyList.put(property.getId(), property);
         }
     }
 
@@ -153,8 +152,8 @@ public class PropertyDatabase implements ReadWrite<Property> {
         result.add(Integer.toString(property.getId()));
         result.add(property.getName());
         result.add(property.getType().toString());
-        result.add(property.getOwner().getUserName());
-        result.add(property.getAgent().getUserName());
+        result.add(property.getOwner().getId() + "");
+        result.add(property.getAgent().getId() + "");
         result.add(Integer.toString(property.getRoomNum()));
         result.add(Integer.toString(property.getBathRoomNum()));
         result.add(packAddress(property.getAddress()));
@@ -162,7 +161,7 @@ public class PropertyDatabase implements ReadWrite<Property> {
         result.add(packFacilities(property.getFacilities()));
 
         if (property.getTenant() != null)
-            result.add(property.getTenant().getUserName());
+            result.add(property.getTenant().getId() + "");
         else
             result.add("");
 
@@ -172,7 +171,7 @@ public class PropertyDatabase implements ReadWrite<Property> {
             result.add("");
 
         result.add(Double.toString(property.getRate()));
-
+        result.add(property.isPublished() ? "t" : "f");
         return result;
     }
 
@@ -180,7 +179,7 @@ public class PropertyDatabase implements ReadWrite<Property> {
     public void writeData() {
         ArrayList<ArrayList<String>> rawData = new ArrayList<>();
 
-        for (Property property : propertyList)
+        for (Property property : propertyList.values())
             rawData.add(rawProperty(property));
 
         CSV.writeCSV(rawData, FILE_PATH);

@@ -18,6 +18,7 @@ public class PropertyBuilder {
     protected Tenant tenant; //available if null else n/a
     protected String comment;
     protected double rate;
+    protected boolean published;
 
     public PropertyBuilder(int id, String name) {
         this.id = id;
@@ -77,6 +78,10 @@ public class PropertyBuilder {
     public PropertyBuilder setRate(double rate) {
         this.rate = rate;
         return this;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 
     public Property build() {

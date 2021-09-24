@@ -13,7 +13,7 @@ public class Initialization {
 
     public static String getPreviousPath() {
         Path p1 = Paths.get(System.getProperty("user.dir")).getParent();
-        return p1+ "/OwnerAgentFX/src/main";
+        return p1+ "//data";
     }
 
     public static void initialization() {

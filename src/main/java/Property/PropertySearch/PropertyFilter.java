@@ -5,15 +5,14 @@ import Agent.Agent;
 import Owner.Owner;
 import Property.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class PropertyFilter {
     private LinkedList<Property> properties;
 
     public PropertyFilter(PropertyFilterBuilder psb) {
-        Collection<Property> getData = PropertyDatabase.getInstance().read();
+        Collection<Property> getData = PropertyDatabase.getInstance().read().values();
         properties = new LinkedList<>(getData);
 
         if (psb.getType() != null) filterType(psb.getType());
@@ -25,7 +24,9 @@ public class PropertyFilter {
         if (psb.getFacilitiesPicker() != null) filterFacilitiesPicker(psb.getFacilitiesPicker());
         if (psb.getPropertyAddress() != null) filterAddress(psb.getPropertyAddress());
         if (psb.getRentalLowBound() != null) filterLowBound(psb.getRentalLowBound());
-        if (psb.getRentalUpBound() != null) filterUpperBound(psb.getRentalUpBound());
+        if (psb.getRentalUpBound() != null) filterUpBound(psb.getRentalUpBound());
+        if (psb.getPublished() != null) filterPublished(psb.getPublished());
+        if (psb.getSorted() != null) filterSorted(psb.getSorted());
     }
 
     public ArrayList<Property> getResult() {
@@ -53,7 +54,7 @@ public class PropertyFilter {
     }
 
     private void filterComment(Boolean commentStatus) {
-        properties.removeIf(p -> (p.getComment().isEmpty()) == commentStatus);
+        properties.removeIf(p -> (p.getComment() == null || p.getComment().isEmpty()) == commentStatus);
     }
 
 
@@ -83,12 +84,24 @@ public class PropertyFilter {
     }
 
     private void filterLowBound (Double lowBound) {
-
         properties.removeIf(p -> p.getRate() < lowBound);
     }
 
-    private void filterUpperBound (Double upBound) {
-
+    private void filterUpBound (Double upBound) {
         properties.removeIf(p -> p.getRate() > upBound);
     }
+
+    private void filterPublished(Boolean published) {
+        properties.removeIf(p -> p.isPublished() != published);
+    }
+
+    private void filterSorted(Boolean sorted) {
+        int isPositive = sorted ? 1 : -1;
+        properties.sort(
+                Comparator.comparingDouble((Property p) -> p.getRate()*isPositive)
+        );
+    }
+
+
+
 }

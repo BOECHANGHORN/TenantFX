@@ -18,6 +18,7 @@ public class Property {
     private Tenant tenant; //available if null else n/a
     private String comment;
     private double rate;
+    private boolean published;
 
     public Property(PropertyBuilder propertyBuilder) {
         this.id = propertyBuilder.id;
@@ -33,6 +34,7 @@ public class Property {
         this.tenant = propertyBuilder.tenant;
         this.comment = propertyBuilder.comment;
         this.rate = propertyBuilder.rate;
+        this.published = propertyBuilder.published;
     }
 
     public int getId() {
@@ -139,6 +141,14 @@ public class Property {
         this.rate = rate;
     }
 
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
     @Override
     public String toString() {
         return "Property{" +
@@ -155,6 +165,7 @@ public class Property {
                 "\n, tenant=" + tenant +
                 "\n, comment='" + comment + '\'' +
                 "\n, rate=" + rate +
+                "\n, published=" + published +
                 '}';
     }
 }

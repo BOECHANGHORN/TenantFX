@@ -8,14 +8,16 @@ import Role.Role;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 public class AgentDatabase implements ReadWriteRole<Agent> {
-    private final File FILE_PATH = new File(Initialization.CUR_PATH + "/agent.CSV");
-    private final ArrayList<Agent> agentList;
+    private final File FILE_PATH = new File(Initialization.CUR_PATH + "//agent.CSV");
+
+    private final TreeMap<Integer, Agent> agentList;
     private final static AgentDatabase instance = new AgentDatabase();
 
     private AgentDatabase () {
-        agentList = new ArrayList<Agent>();
+        agentList = new TreeMap<Integer, Agent>();
     }
 
     @Override
@@ -28,8 +30,13 @@ public class AgentDatabase implements ReadWriteRole<Agent> {
     }
 
     @Override
+    public Agent searchByID(int id) {
+        return agentList.get(id);
+    }
+
+    @Override
     public Agent searchUser(String userName) {
-        for (Agent agent : agentList)
+        for (Agent agent : agentList.values())
             if (agent.getUserName().equals(userName))
                 return agent;
         return null;
@@ -37,18 +44,18 @@ public class AgentDatabase implements ReadWriteRole<Agent> {
 
     @Override
     public int getNewID() {
-        return agentList.get(agentList.size() - 1).getId() + 1;
+        return agentList.lastKey() + 1;
     }
 
     //CRUD
     @Override
     public void create(Agent agent) {
-        agentList.add(agent);
+        agentList.put(agent.getId(), agent);
         appendData(agent);
     }
 
     @Override
-    public ArrayList<Agent> read() {
+    public TreeMap<Integer, Agent> read() {
         return agentList;
     }
 
@@ -74,7 +81,7 @@ public class AgentDatabase implements ReadWriteRole<Agent> {
             Phone phone = new Phone(rawRow.get(3));
 
             Agent agent = new Agent(id, userName, password, phone);
-            agentList.add(agent);
+            agentList.put(agent.getId(), agent);
         }
     }
 
@@ -93,7 +100,7 @@ public class AgentDatabase implements ReadWriteRole<Agent> {
     public void writeData() {
         ArrayList<ArrayList<String>> rawData = new ArrayList<>();
 
-        for (Agent agent : agentList)
+        for (Agent agent : agentList.values())
             rawData.add(rawAgent(agent));
 
         CSV.writeCSV(rawData, FILE_PATH);

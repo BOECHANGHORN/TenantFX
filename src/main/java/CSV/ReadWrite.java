@@ -1,19 +1,17 @@
 package CSV;
 
-import Role.*;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 public interface ReadWrite<T> {
     //Initialization
     void init();
 
+    T searchByID(int id);
     int getNewID();
 
     //CRUD
     void create(T t);
-    ArrayList<T> read();
+    TreeMap<Integer, T> read();
     void update(T t);
     void delete(T t);
 

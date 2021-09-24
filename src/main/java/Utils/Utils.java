@@ -14,6 +14,8 @@ public class Utils {
     public static final String NO = "No";
     public static final String ACTIVE = "Active";
     public static final String INACTIVE = "Inactive";
+    public static final String HIGHEST_FIRST = "Highest First";
+    public static final String LOWEST_FIRST = "Lowest First";
 
 
     public static String getPropertyTypeTxt(PropertyType str) {

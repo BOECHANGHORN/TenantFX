@@ -1,8 +1,10 @@
 package controllers;
 
 import Agent.*;
+import AppHolder.AppHolder;
 import Owner.*;
 import Property.*;
+import Property.PropertySearch.PropertyFilterBuilder;
 import Role.Role;
 import Utils.*;
 import com.app.main.Main;
@@ -12,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 
 public class AddPropertyController {
@@ -26,11 +29,9 @@ public class AddPropertyController {
     @FXML
     private Spinner<Integer> roomNum;
     private SpinnerValueFactory<Integer> roomNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
-
     @FXML
     private Spinner<Integer> bathRoomNum;
     private SpinnerValueFactory<Integer> bathRoomNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
-
     @FXML
     private TextArea address;
     @FXML
@@ -44,25 +45,25 @@ public class AddPropertyController {
     @FXML
     private Spinner<Integer> tvNum;
     private SpinnerValueFactory<Integer> tvNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
-
     @FXML
     private Spinner<Integer> fridgeNum;
     private SpinnerValueFactory<Integer> fridgeNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
     @FXML
     private Spinner<Integer> airConNum;
     private SpinnerValueFactory<Integer> airConNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
-
     @FXML
     private Spinner<Integer> waterHeaterNum;
     private SpinnerValueFactory<Integer> waterHeaterNumVF = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
-
     @FXML
     private TextField sizeTxt;
     @FXML
     private TextField rateTxt;
+    @FXML
+    private CheckBox isPublished;
 
-    private ArrayList<Owner> ownerList = OwnerDatabase.getInstance().read();
-    private ArrayList<Agent> agentList = AgentDatabase.getInstance().read();
+    AppHolder holder = AppHolder.getInstance();
+    private TreeMap<Integer, Owner> ownerList = OwnerDatabase.getInstance().read();
+    private TreeMap<Integer, Agent> agentList = AgentDatabase.getInstance().read();
 
     @FXML
     private void initialize() {
@@ -77,17 +78,28 @@ public class AddPropertyController {
         IntegerFormatter integerFormatter2 = new IntegerFormatter();
         DoubleFormatter doubleFormatter = new DoubleFormatter();
 
-        postcode.setTextFormatter(integerFormatter1.getInstance());
-        sizeTxt.setTextFormatter(integerFormatter2.getInstance());
-        rateTxt.setTextFormatter(doubleFormatter.getInstance());
+        // Owner role only able to create property owned by himself/herself, same concepts applied for agent role
+        Role currentUser = holder.getUser();
+        if (currentUser != null) {
+            String role = currentUser.getRole();
+            if (role.equals("Owner")) {
+                Owner ownerUser = OwnerDatabase.getInstance().searchByID(currentUser.getId()); //try get from OwnerDB
+                ownerChoices.getItems().addAll(ownerUser);
+                agentChoices.getItems().addAll(agentList.values());
+
+            } else if (role.equals("Agent")) {
+                Agent agentUser = AgentDatabase.getInstance().searchByID(currentUser.getId()); //try get from AgentDB
+                ownerChoices.getItems().addAll(ownerList.values());
+                agentChoices.getItems().addAll(agentUser);
+            }
+        }
 
         typeChoices.getItems().addAll(PropertyType.values());
         typeChoices.setConverter(propertyTypeStringConverter);
-        ownerChoices.getItems().addAll(ownerList);
         ownerChoices.setConverter(roleStringConverter);
-        agentChoices.getItems().addAll(agentList);
         agentChoices.setConverter(roleStringConverter);
         stateChoices.getItems().addAll(Utils.STATES);
+        postcode.setTextFormatter(integerFormatter1.getInstance());
         roomNumVF.setValue(0);
         roomNum.setValueFactory(roomNumVF);
         bathRoomNumVF.setValue(0);
@@ -100,7 +112,9 @@ public class AddPropertyController {
         airConNum.setValueFactory(airConNumVF);
         waterHeaterNumVF.setValue(0);
         waterHeaterNum.setValueFactory(waterHeaterNumVF);
+        sizeTxt.setTextFormatter(integerFormatter2.getInstance());
         sizeTxt.setText("0");
+        rateTxt.setTextFormatter(doubleFormatter.getInstance());
     }
 
     @FXML
@@ -120,6 +134,7 @@ public class AddPropertyController {
             double rate = Double.parseDouble(rateTxt.getText());
             pb.setSize(size);
             pb.setRate(rate);
+            pb.setPublished(isPublished.isSelected());
             Property property = new Property(pb);
             propertyDB.create(property);
             if (propertyDB.searchByID(id) != null) {
@@ -157,6 +172,7 @@ public class AddPropertyController {
         swimmingPool.setSelected(false);
         sizeTxt.setText("0");
         rateTxt.setText("0.0");
+        isPublished.setSelected(false);
     }
 
     @FXML

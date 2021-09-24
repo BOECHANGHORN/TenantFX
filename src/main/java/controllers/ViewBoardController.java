@@ -19,10 +19,12 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,9 +85,11 @@ public class ViewBoardController {
         if (currentUser != null) {
             String role = currentUser.getRole();
             if (role.equals("Owner")) {
-                propertyFilterBuilder.setOwner((Owner) currentUser);
+                Owner ownerUser = OwnerDatabase.getInstance().searchByID(currentUser.getId()); //try get from OwnerDB
+                propertyFilterBuilder.setOwner(ownerUser);
             } else if (role.equals("Agent")) {
-                propertyFilterBuilder.setAgent((Agent) currentUser);
+                Agent agentUser = AgentDatabase.getInstance().searchByID(currentUser.getId()); //try get from AgentDB
+                propertyFilterBuilder.setAgent(agentUser);
 
             }
         }
@@ -126,6 +130,10 @@ public class ViewBoardController {
         if (propertyFilterHolder.isMaxRateChecked() && propertyFilterHolder.getMaxRate() != null) {
             double doubleMaxRate = Double.parseDouble(propertyFilterHolder.getMaxRate());
             propertyFilterBuilder.setRentalUpBound(doubleMaxRate);
+        }
+        if(propertyFilterHolder.isSortChecked() && propertyFilterHolder.getSortChoice()!= null){
+            boolean isSortedByLowestFirst = propertyFilterHolder.getSortChoice() == Utils.LOWEST_FIRST;
+            propertyFilterBuilder.setSorted(isSortedByLowestFirst);
         }
 
         ArrayList<Property> filteredPropertyList = propertyFilterBuilder.build().getResult();
@@ -168,6 +176,12 @@ public class ViewBoardController {
                     GridPane.setMargin(anchorPane, new Insets(10));
                     row++;
                 }
+            }else{
+                Label msg = new Label();
+                msg.setText("No result found.");
+                msg.setFont(new Font("System", 20));
+                msg.setPadding(new Insets(10));
+                grid.add(msg, 0, 0);
             }
         } catch (IOException e) {
             e.printStackTrace();

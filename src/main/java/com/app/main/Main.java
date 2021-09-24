@@ -15,13 +15,12 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         Initialization.initialization();
         this.primaryStage = stage;
-        Parent root = FXMLLoader.load(Main.class.getResource("ViewBoard.fxml"));
+        Parent root = FXMLLoader.load(Main.class.getResource("Login.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setTitle("Rental System");
         primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("Scene loaded");
-
     }
 
     public static void switchScene(String fxml) throws IOException {

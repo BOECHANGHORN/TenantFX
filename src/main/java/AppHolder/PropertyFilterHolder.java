@@ -11,6 +11,7 @@ public class PropertyFilterHolder {
     private boolean addressChecked;
     private boolean minRateChecked;
     private boolean maxRateChecked;
+    private boolean sortChecked;
     private PropertyType typeChoice;;
     private String statusChoice;;
     private boolean isCommented;
@@ -25,6 +26,23 @@ public class PropertyFilterHolder {
     private String postcodeField ;;
     private String minRate;
     private String maxRate;
+    private String sortChoice;
+
+    public String getSortChoice() {
+        return sortChoice;
+    }
+
+    public void setSortChoice(String sortChoice) {
+        this.sortChoice = sortChoice;
+    }
+
+    public boolean isSortChecked() {
+        return sortChecked;
+    }
+
+    public void setSortChecked(boolean sortChecked) {
+        this.sortChecked = sortChecked;
+    }
 
     public String getStateChoice() {
         return stateChoice;

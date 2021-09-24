@@ -175,14 +175,14 @@
             <Spinner fx:id="fridgeNum" layoutX="666.0" layoutY="478.0" prefWidth="349.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Spinner fx:id="waterHeaterNum" layoutX="211.0" layoutY="549.0" prefWidth="349.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Spinner fx:id="airConNum" layoutX="25.0" layoutY="49.0" prefWidth="349.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <TextField fx:id="sizeTxt" promptText="Please enter a number" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="rateTxt" promptText="Please enter a number" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-            <Label alignment="CENTER" layoutX="25.0" layoutY="581.0" prefHeight="86.0" prefWidth="371.0" text="Size (sqft):" GridPane.rowIndex="8">
+            <TextField fx:id="sizeTxt" promptText="Please enter a number" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <TextField fx:id="rateTxt" promptText="Please enter a number" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label alignment="CENTER" layoutX="25.0" layoutY="581.0" prefHeight="86.0" prefWidth="371.0" text="Size (sqft):" GridPane.columnIndex="2" GridPane.rowIndex="7">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="25.0" layoutY="660.0" prefHeight="86.0" prefWidth="371.0" text="Rate (RM):" GridPane.columnIndex="2" GridPane.rowIndex="8">
+            <Label alignment="CENTER" layoutX="25.0" layoutY="660.0" prefHeight="86.0" prefWidth="371.0" text="Rate (RM):" GridPane.rowIndex="8">
                <font>
                   <Font size="15.0" />
                </font>
@@ -193,6 +193,12 @@
                </font>
             </Label>
             <ChoiceBox fx:id="typeChoices" layoutX="207.0" layoutY="125.0" prefHeight="25.0" prefWidth="284.0" GridPane.columnIndex="3" />
+            <Label alignment="CENTER" layoutX="469.0" layoutY="550.0" prefHeight="86.0" prefWidth="371.0" text="Published:" GridPane.columnIndex="2" GridPane.rowIndex="8">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="isPublished" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.rowIndex="8" />
          </children>
          <BorderPane.margin>
             <Insets />
