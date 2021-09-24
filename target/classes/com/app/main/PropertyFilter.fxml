@@ -47,7 +47,7 @@
             <CheckBox fx:id="typeChecked" mnemonicParsing="false" text="Property Type" GridPane.rowIndex="1" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <CheckBox fx:id="statusChecked" mnemonicParsing="false" text="Status" />
+                  <CheckBox fx:id="statusChecked" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" text="Status" />
                   <CheckBox fx:id="commentsChecked" mnemonicParsing="false" text="Comments" />
                </children>
             </HBox>

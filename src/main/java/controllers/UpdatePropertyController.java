@@ -61,7 +61,6 @@ public class UpdatePropertyController {
     private  CheckBox isPublished;
 
     AppHolder holder = AppHolder.getInstance();
-    private TreeMap<Integer, Owner> ownerList = OwnerDatabase.getInstance().read();
     private TreeMap<Integer, Agent> agentList = AgentDatabase.getInstance().read();
     private Property selectedProperty = AppHolder.getInstance().getSelectedProperty();
 

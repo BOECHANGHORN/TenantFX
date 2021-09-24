@@ -74,20 +74,20 @@ public class PropertyFilter {
     }
 
 
-    private void filterAddress (PropertyAddress adrs) {
-        if (!adrs.getDetailAddress().isEmpty())
+    private void filterAddress(PropertyAddress adrs) {
+        if (adrs.getDetailAddress() != null && !adrs.getDetailAddress().isEmpty())
             properties.removeIf(p -> !p.getAddress().getDetailAddress().contains(adrs.getDetailAddress()));
-        if (!adrs.getState().isEmpty())
+        if (adrs.getState() != null && !adrs.getState().isEmpty())
             properties.removeIf(p -> !p.getAddress().getState().contains(adrs.getState()));
-        if (!adrs.getPostalCode().isEmpty())
+        if (adrs.getPostalCode() != null && !adrs.getPostalCode().isEmpty())
             properties.removeIf(p -> !p.getAddress().getPostalCode().contains(adrs.getPostalCode()));
     }
 
-    private void filterLowBound (Double lowBound) {
+    private void filterLowBound(Double lowBound) {
         properties.removeIf(p -> p.getRate() < lowBound);
     }
 
-    private void filterUpBound (Double upBound) {
+    private void filterUpBound(Double upBound) {
         properties.removeIf(p -> p.getRate() > upBound);
     }
 
@@ -98,10 +98,9 @@ public class PropertyFilter {
     private void filterSorted(Boolean sorted) {
         int isPositive = sorted ? 1 : -1;
         properties.sort(
-                Comparator.comparingDouble((Property p) -> p.getRate()*isPositive)
+                Comparator.comparingDouble((Property p) -> p.getRate() * isPositive)
         );
     }
-
 
 
 }

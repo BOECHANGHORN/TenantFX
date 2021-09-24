@@ -119,7 +119,7 @@ public class ViewBoardController {
             facilitiesPicker.setSwimmingPool(propertyFilterHolder.isSwimmingPool());
             propertyFilterBuilder.setFacilitiesPicker(facilitiesPicker);
         }
-        if (propertyFilterHolder.isAddressChecked() && propertyFilterHolder.getAddressField() != null && propertyFilterHolder.getPostcodeField() != null && propertyFilterHolder.getStateChoice() != null) {
+        if (propertyFilterHolder.isAddressChecked()) {
             PropertyAddress propertyAddress = new PropertyAddress(propertyFilterHolder.getAddressField(), propertyFilterHolder.getPostcodeField(), propertyFilterHolder.getStateChoice());
             propertyFilterBuilder.setPropertyAddress(propertyAddress);
         }
