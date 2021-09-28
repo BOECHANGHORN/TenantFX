@@ -4,6 +4,7 @@ import Agent.AgentDatabase;
 import AppHolder.AppHolder;
 import Owner.OwnerDatabase;
 import Role.Role;
+import Tenant.TenantDatabase;
 import com.app.main.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -32,18 +33,14 @@ public class LoginController {
     @FXML
     private void onLogin(MouseEvent mouseEvent) throws IOException {
 
-        Role agentUser = AgentDatabase.getInstance().searchUser(username.getText()); //try get from AgentDB
-        Role ownerUser = OwnerDatabase.getInstance().searchUser(username.getText()); //try get from OwnerDB
+        Role tenantUser = TenantDatabase.getInstance().searchUser(username.getText()); //try get from TenantDB
 
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
             msg.setText("Please enter your credentials.");
-        } else if ((agentUser != null) && agentUser.getPassword().equals(password.getText()) || (ownerUser != null) && ownerUser.getPassword().equals(password.getText())) {
+        } else if ((tenantUser != null) && tenantUser.getPassword().equals(password.getText())) {
             AppHolder holder = AppHolder.getInstance();
-            if (agentUser != null) {
-                holder.setUser(agentUser);
-            } else {
-                holder.setUser(ownerUser);
-            }
+            if (tenantUser != null)
+                holder.setUser(tenantUser);
 
             Main.switchScene("ViewBoard.fxml");
         } else {

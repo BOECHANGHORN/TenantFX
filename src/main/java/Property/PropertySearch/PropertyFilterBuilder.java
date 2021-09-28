@@ -2,6 +2,8 @@ package Property.PropertySearch;
 
 import Agent.Agent;
 import Owner.Owner;
+import Tenant.Tenant;
+import Admin.Admin;
 import Property.PropertyAddress;
 import Property.PropertyType;
 
@@ -10,6 +12,8 @@ public class PropertyFilterBuilder {
     private String name;
     private Owner owner;
     private Agent agent;
+    private Tenant tenant;
+    private Admin admin;
     private Boolean availability;
     private Boolean comment;
     private FacilitiesPicker facilitiesPicker;
@@ -52,6 +56,16 @@ public class PropertyFilterBuilder {
 
     public PropertyFilterBuilder setAgent(Agent agent) {
         this.agent = agent;
+        return this;
+    }
+
+    public PropertyFilterBuilder setTenant(Tenant tenant) {
+        this.tenant = tenant;
+        return this;
+    }
+
+    public PropertyFilterBuilder setAdmin(Admin admin) {
+        this.admin = admin;
         return this;
     }
 

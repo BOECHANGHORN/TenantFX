@@ -1,15 +1,13 @@
 package controllers;
 
-import Agent.Agent;
-import Agent.AgentDatabase;
+
 import AppHolder.*;
-import Owner.Owner;
-import Owner.OwnerDatabase;
-import Phone.Phone;
 import Property.*;
 import Property.PropertySearch.FacilitiesPicker;
 import Property.PropertySearch.PropertyFilterBuilder;
 import Role.Role;
+import Tenant.Tenant;
+import Tenant.TenantDatabase;
 import Utils.PropertyListener;
 import Utils.Utils;
 import com.app.main.Main;
@@ -48,7 +46,7 @@ public class ViewBoardController {
     @FXML
     void onClearFilter() {
         holder.setPropertyFilterHolder(null);
-        displayPropertyList( this.ownedPropertyList);
+        displayPropertyList(this.ownedPropertyList);
     }
 
     @FXML
@@ -84,13 +82,9 @@ public class ViewBoardController {
 
         if (currentUser != null) {
             String role = currentUser.getRole();
-            if (role.equals("Owner")) {
-                Owner ownerUser = OwnerDatabase.getInstance().searchByID(currentUser.getId()); //try get from OwnerDB
-                propertyFilterBuilder.setOwner(ownerUser);
-            } else if (role.equals("Agent")) {
-                Agent agentUser = AgentDatabase.getInstance().searchByID(currentUser.getId()); //try get from AgentDB
-                propertyFilterBuilder.setAgent(agentUser);
-
+            if (role.equals("Tenant")) {
+                Tenant tenantUser = TenantDatabase.getInstance().searchByID(currentUser.getId()); //try get from TenantDB
+                propertyFilterBuilder.setTenant(tenantUser);
             }
         }
         return propertyFilterBuilder;
@@ -146,16 +140,6 @@ public class ViewBoardController {
         grid.getChildren().clear();
         try {
             if (propertyList.size() > 0) {
-                myListener = new PropertyListener() {
-                    @Override
-                    public void onClickListener(Property property) {
-                        try {
-                            updateSelectedProperty(property);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
                 for (Property p : propertyList) {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation((Main.class.getResource("propertyRow.fxml")));
@@ -189,20 +173,9 @@ public class ViewBoardController {
 
     }
 
-
-    private void updateSelectedProperty(Property property) throws IOException {
-        holder.setSelectedProperty(property);
-        Main.switchScene("UpdateProperty.fxml");
-    }
-
     @FXML
     private void onClickHomeBtn(MouseEvent mouseEvent) throws IOException {
         Main.goToViewBoardPage();
-    }
-
-    @FXML
-    private void onClickAddBtn(MouseEvent mouseEvent) throws IOException {
-        Main.goToAddPropertyPage();
     }
 
     @FXML

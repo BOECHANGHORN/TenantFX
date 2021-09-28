@@ -27,7 +27,6 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(Main.class.getResource(fxml));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-
     }
 
     public  static void goToLoginPage() throws IOException {
@@ -41,11 +40,6 @@ public class Main extends Application {
     public  static void goToEditProfilePage() throws IOException {
         switchScene("EditProfile.fxml");
     }
-
-    public  static void goToAddPropertyPage() throws IOException {
-        switchScene("AddProperty.fxml");
-    }
-
 
     public static void main(String[] args) {
         launch();

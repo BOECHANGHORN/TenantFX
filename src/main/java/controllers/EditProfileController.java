@@ -1,5 +1,6 @@
 package controllers;
 
+import Admin.AdminDatabase;
 import Agent.Agent;
 import Agent.AgentDatabase;
 import AppHolder.AppHolder;
@@ -7,6 +8,8 @@ import Owner.Owner;
 import Owner.OwnerDatabase;
 import Phone.Phone;
 import Role.Role;
+import Tenant.Tenant;
+import Tenant.TenantDatabase;
 import Utils.Utils;
 import com.app.main.Main;
 import javafx.fxml.FXML;
@@ -40,20 +43,13 @@ public class EditProfileController {
                 String newPassword = passwordField.getText();
                 String newPhoneNo = phoneNoField.getText();
 
-                if (role.equals("Owner")) {
-                    OwnerDatabase ownerDB = OwnerDatabase.getInstance();
-                    Owner ownerUser = ownerDB.searchUser(currentUsername);
-                    ownerUser.setUserName(newUsername);
-                    ownerUser.setPassword(newPassword);
-                    ownerUser.setPhone(new Phone(newPhoneNo));
-                    ownerDB.update(ownerUser);
-                } else if (role.equals("Agent")) {
-                    AgentDatabase agentDB = AgentDatabase.getInstance();
-                    Agent agentUser = agentDB.searchUser(currentUsername);
-                    agentUser.setUserName(newUsername);
-                    agentUser.setPassword(newPassword);
-                    agentUser.setPhone(new Phone(newPhoneNo));
-                    agentDB.update(agentUser);
+                if (role.equals("Tenant")) {
+                    TenantDatabase tenantDB = TenantDatabase.getInstance();
+                    Tenant tenantUser = tenantDB.searchUser(currentUsername);
+                    tenantUser.setUserName(newUsername);
+                    tenantUser.setPassword(newPassword);
+                    tenantUser.setPhone(new Phone(newPhoneNo));
+                    tenantDB.update(tenantUser);
                 }
 
                 Utils.showAlert("Updated Successful!!", true);
@@ -79,11 +75,6 @@ public class EditProfileController {
     @FXML
     private void onClickHomeBtn(MouseEvent mouseEvent) throws IOException {
         Main.goToViewBoardPage();
-    }
-
-    @FXML
-    private void onClickAddBtn(MouseEvent mouseEvent) throws IOException {
-        Main.goToAddPropertyPage();
     }
 
     @FXML
