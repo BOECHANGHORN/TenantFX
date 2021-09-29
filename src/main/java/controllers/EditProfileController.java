@@ -38,14 +38,12 @@ public class EditProfileController {
                 String newPassword = passwordField.getText();
                 String newPhoneNo = phoneNoField.getText();
 
-                if (role.equals("Tenant")) {
-                    TenantDatabase tenantDB = TenantDatabase.getInstance();
-                    Tenant tenantUser = tenantDB.searchUser(currentUsername);
-                    tenantUser.setUserName(newUsername);
-                    tenantUser.setPassword(newPassword);
-                    tenantUser.setPhone(new Phone(newPhoneNo));
-                    tenantDB.update(tenantUser);
-                }
+                TenantDatabase tenantDB = TenantDatabase.getInstance();
+                Tenant tenantUser = tenantDB.searchUser(currentUsername);
+                tenantUser.setUserName(newUsername);
+                tenantUser.setPassword(newPassword);
+                tenantUser.setPhone(new Phone(newPhoneNo));
+                tenantDB.update(tenantUser);
 
                 Utils.showAlert("Updated Successful!!", true);
             } else {
