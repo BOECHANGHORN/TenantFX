@@ -1,13 +1,9 @@
 package controllers;
 
-
 import AppHolder.*;
 import Property.*;
 import Property.PropertySearch.FacilitiesPicker;
 import Property.PropertySearch.PropertyFilterBuilder;
-import Role.Role;
-import Tenant.Tenant;
-import Tenant.TenantDatabase;
 import Utils.PropertyListener;
 import Utils.Utils;
 import com.app.main.Main;
@@ -76,17 +72,9 @@ public class ViewBoardController {
     }
 
     private PropertyFilterBuilder getOwnPropertyFilterBuilder(){
-
-        Role currentUser = holder.getUser();
         PropertyFilterBuilder propertyFilterBuilder = new PropertyFilterBuilder();
+        propertyFilterBuilder.setAvailability(true).setPublished(true);
 
-        if (currentUser != null) {
-            String role = currentUser.getRole();
-            if (role.equals("Tenant")) {
-                Tenant tenantUser = TenantDatabase.getInstance().searchByID(currentUser.getId()); //try get from TenantDB
-                propertyFilterBuilder.setTenant(tenantUser);
-            }
-        }
         return propertyFilterBuilder;
     }
 

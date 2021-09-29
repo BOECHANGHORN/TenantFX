@@ -4,7 +4,6 @@ import Property.Property;
 import Utils.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 public class PropertyRowController {
     @FXML

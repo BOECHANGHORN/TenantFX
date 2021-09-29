@@ -1,6 +1,5 @@
 package Initializer;
 
-import Admin.AdminDatabase;
 import Agent.AgentDatabase;
 import Owner.OwnerDatabase;
 import Property.PropertyDatabase;
@@ -22,6 +21,5 @@ public class Initialization {
         OwnerDatabase.getInstance().init();
         TenantDatabase.getInstance().init();
         PropertyDatabase.getInstance().init();
-        AdminDatabase.getInstance().init();
     }
 }

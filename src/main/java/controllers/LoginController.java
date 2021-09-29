@@ -1,8 +1,6 @@
 package controllers;
 
-import Agent.AgentDatabase;
 import AppHolder.AppHolder;
-import Owner.OwnerDatabase;
 import Role.Role;
 import Tenant.TenantDatabase;
 import com.app.main.Main;
@@ -11,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 
@@ -39,8 +36,7 @@ public class LoginController {
             msg.setText("Please enter your credentials.");
         } else if ((tenantUser != null) && tenantUser.getPassword().equals(password.getText())) {
             AppHolder holder = AppHolder.getInstance();
-            if (tenantUser != null)
-                holder.setUser(tenantUser);
+            holder.setUser(tenantUser);
 
             Main.switchScene("ViewBoard.fxml");
         } else {

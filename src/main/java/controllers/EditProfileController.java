@@ -1,11 +1,6 @@
 package controllers;
 
-import Admin.AdminDatabase;
-import Agent.Agent;
-import Agent.AgentDatabase;
 import AppHolder.AppHolder;
-import Owner.Owner;
-import Owner.OwnerDatabase;
 import Phone.Phone;
 import Role.Role;
 import Tenant.Tenant;

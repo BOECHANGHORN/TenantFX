@@ -50,7 +50,7 @@ public class PropertyFilter {
     }
 
     private void filterStatus(Boolean availability) {
-        properties.removeIf(p -> (p.getTenant() == null) == availability);
+        properties.removeIf(p -> (p.getTenant() != null) == availability);
     }
 
     private void filterComment(Boolean commentStatus) {
