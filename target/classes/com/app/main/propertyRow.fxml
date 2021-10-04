@@ -11,13 +11,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="700.0" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PropertyRowController">
+<AnchorPane fx:id="propertyPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onClick" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PropertyRowController">
    <children>
-      <VBox prefHeight="200.0" prefWidth="700.0" spacing="5.0">
+      <VBox prefHeight="294.0" prefWidth="700.0" spacing="5.0">
          <children>
-            <HBox prefHeight="54.0" prefWidth="680.0">
+            <HBox maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="54.0">
                <children>
-                  <Label fx:id="nameLabel" alignment="TOP_LEFT" prefHeight="60.0" prefWidth="680.0" text="Lucentia Residence @ Bukit Bintang">
+                  <Label fx:id="nameLabel" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="574.0" text="Lucentia Residence @ Bukit Bintang">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -39,23 +39,35 @@
             </HBox>
             <HBox>
                <children>
-                  <Label fx:id="buildingDetailLabel" minWidth="-Infinity" prefHeight="17.0" prefWidth="668.0" styleClass="grey-text" stylesheets="@../../../styles.css" text="Bungalow • 18186 sqft" />
+                  <Label fx:id="buildingDetailLabel" minWidth="-Infinity" prefHeight="36.0" prefWidth="668.0" styleClass="grey-text" stylesheets="@../../../styles.css" text="Bungalow • 18186 sqft" />
+               </children>
+            </HBox>
+            <HBox fx:id="ownerRow" layoutX="25.0" layoutY="144.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="ownerTitle" prefHeight="26.0" prefWidth="66.0" text="Owner:" />
+                  <Label fx:id="ownerLabel" prefHeight="24.0" prefWidth="380.0" text="N/A" />
+               </children>
+            </HBox>
+            <HBox fx:id="agentRow" layoutX="25.0" layoutY="196.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="agentTitle" prefHeight="26.0" prefWidth="66.0" text="Agent:" />
+                  <Label fx:id="agentLabel" prefHeight="24.0" prefWidth="379.0" text="N/A" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <GridPane>
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="83.0" />
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="83.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="111.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.0" minWidth="10.0" prefWidth="74.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0" prefWidth="90.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="97.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="145.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="145.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
@@ -105,12 +117,18 @@
                         <Label fx:id="wifiLabel" prefHeight="31.0" prefWidth="24.0" text="Yes" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="31.0" prefWidth="188.0">
+                  <HBox prefHeight="30.0" prefWidth="188.0">
                      <children>
                         <Label prefHeight="31.0" prefWidth="96.0" text="Swimming Pool:" />
                         <Label fx:id="spLabel" prefHeight="31.0" prefWidth="30.0" text="No" />
                      </children>
                   </HBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="32.0" prefWidth="66.0" text="Comment:" />
+                  <Label fx:id="commentLabel" prefHeight="47.0" prefWidth="603.0" text="N/A" />
                </children>
             </HBox>
          </children>
