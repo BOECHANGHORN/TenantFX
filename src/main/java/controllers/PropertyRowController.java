@@ -4,6 +4,7 @@ import Property.Property;
 import Utils.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 public class PropertyRowController {
     @FXML
@@ -12,6 +13,10 @@ public class PropertyRowController {
     private Label addressLabel;
     @FXML
     private Label rateLabel;
+    @FXML
+    private Label ownerLabel;
+    @FXML
+    private Label agentLabel;
     @FXML
     private Label buildingDetailLabel;
     @FXML
@@ -30,10 +35,16 @@ public class PropertyRowController {
     private Label wifiLabel;
     @FXML
     private Label spLabel;
+    @FXML
+    private Label commentLabel;
 
     private Property property;
     private PropertyListener myListener;
 
+    @FXML
+    private void onClick(MouseEvent mouseEvent) {
+        myListener.onClickListener(property);
+    }
 
     public void setData(Property property, PropertyListener myListener) {
         this.property = property;
@@ -51,6 +62,16 @@ public class PropertyRowController {
         airCondNumLabel.setText(Integer.toString(property.getFacilities().getAirCond()));
         wifiLabel.setText(Utils.getYesOrNo(property.getFacilities().isWifi()));
         spLabel.setText(Utils.getYesOrNo(property.getFacilities().isSwimmingPool()));
+        ownerLabel.setText(property.getOwner().getUserName() + " ( " + property.getOwner().getPhone().getNumber() + " )");
+        agentLabel.setText(property.getAgent().getUserName() + " ( " + property.getAgent().getPhone().getNumber() + " )");
+
+        String commentStr = property.getComment();
+        if (commentStr == null) {
+            commentLabel.setText("N/A");
+            commentLabel.setStyle("-fx-text-fill: #697684");
+        } else {
+            commentLabel.setText(property.getComment());
+        }
     }
 }
 
