@@ -1,8 +1,7 @@
 package controllers;
 
 import AppHolder.AppHolder;
-import Role.Role;
-import Tenant.TenantDatabase;
+import Role.*;
 import com.app.main.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -29,19 +28,37 @@ public class LoginController {
 
     @FXML
     private void onLogin(MouseEvent mouseEvent) throws IOException {
-
-        Role tenantUser = TenantDatabase.getInstance().searchUser(username.getText()); //try get from TenantDB
-
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
             msg.setText("Please enter your credentials.");
-        } else if ((tenantUser != null) && tenantUser.getPassword().equals(password.getText())) {
-            AppHolder holder = AppHolder.getInstance();
-            holder.setUser(tenantUser);
-
-            Main.switchScene("ViewBoard.fxml");
-        } else {
-            msg.setText("Invalid credentials!");
+            return;
         }
 
+        String userNameEntered = username.getText();
+        String paswordEntered = password.getText();
+
+        Role getUser = RoleDatabase.searchUser(userNameEntered);
+
+        if (getUser == null) {
+            msg.setText("User does not exist");
+            return;
+        }
+
+        String role = getUser.getRole();
+        String password = getUser.getPassword();
+
+        if(!role.equals("Tenant")) {
+            msg.setText("Wrong software. For Tenant only");
+            return;
+        }
+
+        if (!password.equals(paswordEntered)) {
+            msg.setText("Invalid credentials!");
+            return;
+        }
+
+        AppHolder holder = AppHolder.getInstance();
+        holder.setUser(getUser);
+
+        Main.switchScene("ViewBoard.fxml");
     }
 }

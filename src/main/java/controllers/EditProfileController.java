@@ -2,9 +2,7 @@ package controllers;
 
 import AppHolder.AppHolder;
 import Phone.Phone;
-import Role.Role;
-import Tenant.Tenant;
-import Tenant.TenantDatabase;
+import Role.*;
 import Utils.Utils;
 import com.app.main.Main;
 import javafx.fxml.FXML;
@@ -30,27 +28,28 @@ public class EditProfileController {
 
     @FXML
     private void onUpdate(MouseEvent mouseEvent) throws IOException {
-        if (currentUser != null) {
-            if (isValid()) {
-                String role = currentUser.getRole();
-                String currentUsername = currentUser.getUserName();
-                String newUsername = usernameField.getText();
-                String newPassword = passwordField.getText();
-                String newPhoneNo = phoneNoField.getText();
-
-                TenantDatabase tenantDB = TenantDatabase.getInstance();
-                Tenant tenantUser = tenantDB.searchUser(currentUsername);
-                tenantUser.setUserName(newUsername);
-                tenantUser.setPassword(newPassword);
-                tenantUser.setPhone(new Phone(newPhoneNo));
-                tenantDB.update(tenantUser);
-
-                Utils.showAlert("Updated Successful!!", true);
-            } else {
-                Utils.showAlert("All fields are required", false);
-            }
-
+        if (!isValid()) {
+            Utils.showAlert("All fields are required", false, mouseEvent);
+            return;
         }
+
+        String currentUsername = currentUser.getUserName();
+        String newUsername = usernameField.getText();
+        String newPassword = passwordField.getText();
+        String newPhoneNo = phoneNoField.getText();
+
+        if (!currentUsername.equals(newUsername) && RoleDatabase.isUserExist(newUsername))  {
+            Utils.showAlert("User name has been taken", false, mouseEvent);
+            return;
+        }
+
+        Role currentUser = RoleDatabase.searchUser(currentUsername);
+        currentUser.setUserName(newUsername);
+        currentUser.setPassword(newPassword);
+        currentUser.setPhone(new Phone(newPhoneNo));
+        RoleDatabase.update(currentUser);
+
+        Utils.showAlert("Updated Successful!!", true, mouseEvent);
     }
 
     private boolean isValid() {
