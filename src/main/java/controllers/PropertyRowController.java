@@ -41,11 +41,6 @@ public class PropertyRowController {
     private Property property;
     private PropertyListener myListener;
 
-    @FXML
-    private void onClick(MouseEvent mouseEvent) {
-        myListener.onClickListener(property);
-    }
-
     public void setData(Property property, PropertyListener myListener) {
         this.property = property;
         this.myListener = myListener;

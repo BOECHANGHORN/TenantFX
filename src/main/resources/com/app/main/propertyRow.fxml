@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="propertyPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onClick" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PropertyRowController">
+<AnchorPane fx:id="propertyPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../../../styles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PropertyRowController">
    <children>
       <VBox prefHeight="294.0" prefWidth="700.0" spacing="5.0">
          <children>

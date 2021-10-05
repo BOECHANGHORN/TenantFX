@@ -34,7 +34,7 @@ public class LoginController {
         }
 
         String userNameEntered = username.getText();
-        String paswordEntered = password.getText();
+        String passwordEntered = password.getText();
 
         Role getUser = RoleDatabase.searchUser(userNameEntered);
 
@@ -51,7 +51,7 @@ public class LoginController {
             return;
         }
 
-        if (!password.equals(paswordEntered)) {
+        if (!password.equals(passwordEntered)) {
             msg.setText("Invalid credentials!");
             return;
         }

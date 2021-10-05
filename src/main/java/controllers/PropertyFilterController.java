@@ -6,6 +6,7 @@ import Utils.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 public class PropertyFilterController {
     public static final String[] STATUSES = {Utils.ACTIVE, Utils.INACTIVE};
@@ -114,7 +115,7 @@ public class PropertyFilterController {
         typeChoices.setConverter(propertyTypeStringConverter);
         statusChoices.getItems().addAll(STATUSES);
         stateChoices.getItems().addAll(Utils.STATES);
-        postcodeField.setTextFormatter(integerFormatter.getInstance());
+        postcodeField.setTextFormatter(new PostcodeFormatter().getInstance());
         minRate.setTextFormatter(doubleFormatter1.getInstance());
         maxRate.setTextFormatter(doubleFormatter2.getInstance());
         sortChoices.getItems().addAll(SORT_CHOICES);
@@ -146,5 +147,29 @@ public class PropertyFilterController {
             maxRate.setText(propertyFilterHolder.getMaxRate());
             sortChoices.setValue(propertyFilterHolder.getSortChoice());
         }
+    }
+
+    public void onPropertyTypeCheck(MouseEvent mouseEvent) {
+    }
+
+    public void onStatusCheck(MouseEvent mouseEvent) {
+    }
+
+    public void onCommentsCheck(MouseEvent mouseEvent) {
+    }
+
+    public void onMinRateCheck(MouseEvent mouseEvent) {
+    }
+
+    public void onMaxRateCheck(MouseEvent mouseEvent) {
+    }
+
+    public void onAddressCheck(MouseEvent mouseEvent) {
+    }
+
+    public void onFacilitiesCheck(MouseEvent mouseEvent) {
+    }
+
+    public void onSortingCheck(MouseEvent mouseEvent) {
     }
 }
