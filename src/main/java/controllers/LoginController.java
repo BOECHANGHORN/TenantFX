@@ -2,7 +2,6 @@ package controllers;
 
 import AppHolder.AppHolder;
 import Role.*;
-import com.app.main.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -10,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+
+import static com.app.main.Main.switchScene;
 
 public class LoginController {
     @FXML
@@ -23,7 +24,11 @@ public class LoginController {
     private void initialize() {
         username.setFocusTraversable(true);
         password.setFocusTraversable(false);
+    }
 
+    @FXML
+    private void onRegister(MouseEvent mouseEvent) throws IOException {
+        switchScene("Register.fxml");
     }
 
     @FXML
@@ -59,6 +64,6 @@ public class LoginController {
         AppHolder holder = AppHolder.getInstance();
         holder.setUser(getUser);
 
-        Main.switchScene("ViewBoard.fxml");
+        switchScene("ViewBoard.fxml");
     }
 }
