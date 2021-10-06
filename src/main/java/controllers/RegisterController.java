@@ -4,6 +4,7 @@ import AppHolder.AppHolder;
 import Phone.Phone;
 import Role.RoleDatabase;
 import Tenant.*;
+import Utils.PhoneFormatter;
 import Utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -22,7 +23,12 @@ public class RegisterController {
     private TextField phoneNoField;
 
     @FXML
-    public void onRegister(MouseEvent mouseEvent) throws IOException{
+    private void initialize() {
+        phoneNoField.setTextFormatter(new PhoneFormatter().getInstance());
+    }
+
+    @FXML
+    private void onRegister(MouseEvent mouseEvent) throws IOException{
         if (isValid()) {
 
             String newUsername = usernameField.getText();
@@ -49,7 +55,7 @@ public class RegisterController {
     }
 
     @FXML
-    public void onBack(MouseEvent mouseEvent) throws IOException {
+    private void onBack(MouseEvent mouseEvent) throws IOException {
         switchScene("Login.fxml");
     }
 

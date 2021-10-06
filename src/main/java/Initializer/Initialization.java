@@ -1,5 +1,6 @@
 package Initializer;
 
+import Admin.AdminDatabase;
 import Agent.AgentDatabase;
 import Owner.OwnerDatabase;
 import Property.PropertyDatabase;
@@ -13,7 +14,7 @@ public class Initialization {
 
     public static String getPreviousPath() {
         Path p1 = Paths.get(System.getProperty("user.dir")).getParent();
-        return p1+ "//data";
+        return p1 + "//data";
     }
 
     public static void initialization() {
@@ -21,5 +22,6 @@ public class Initialization {
         OwnerDatabase.getInstance().init();
         TenantDatabase.getInstance().init();
         PropertyDatabase.getInstance().init();
+        AdminDatabase.getInstance().init();
     }
 }

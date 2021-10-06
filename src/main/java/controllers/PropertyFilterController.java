@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 public class PropertyFilterController {
-    public static final String[] STATUSES = {Utils.ACTIVE, Utils.INACTIVE};
     public static final String[] SORT_CHOICES = {Utils.LOWEST_FIRST, Utils.HIGHEST_FIRST};
 
     @FXML
@@ -17,8 +16,6 @@ public class PropertyFilterController {
 
     @FXML
     private CheckBox typeChecked;
-    @FXML
-    private CheckBox statusChecked;
     @FXML
     private CheckBox commentsChecked;
     @FXML
@@ -33,8 +30,6 @@ public class PropertyFilterController {
     private CheckBox sortChecked;
     @FXML
     private ChoiceBox<PropertyType> typeChoices;
-    @FXML
-    private ChoiceBox<String> statusChoices;
     @FXML
     private CheckBox isCommented;
     @FXML
@@ -66,19 +61,17 @@ public class PropertyFilterController {
     @FXML
     private void initialize() {
         populateData();
+        initCheck();
 
         Button okButton = (Button) dialogPane.lookupButton(ButtonType.APPLY);
         okButton.addEventFilter(
-                ActionEvent.ACTION, event -> {
-                    setPropertyFilterHolder();
-                });
+                ActionEvent.ACTION, event -> setPropertyFilterHolder());
     }
 
     private void setPropertyFilterHolder(){
         AppHolder holder = AppHolder.getInstance();
         PropertyFilterHolder propertyFilterHolder = new PropertyFilterHolder();
         propertyFilterHolder.setTypeChecked(typeChecked.isSelected());
-        propertyFilterHolder.setStatusChecked(statusChecked.isSelected());
         propertyFilterHolder.setCommentsChecked(commentsChecked.isSelected());
         propertyFilterHolder.setFacilitiesChecked(facilitiesChecked.isSelected());
         propertyFilterHolder.setAddressChecked(addressChecked.isSelected());
@@ -86,7 +79,6 @@ public class PropertyFilterController {
         propertyFilterHolder.setMaxRateChecked(maxRateChecked.isSelected());
         propertyFilterHolder.setSortChecked(sortChecked.isSelected());
         propertyFilterHolder.setTypeChoice(typeChoices.getValue());
-        propertyFilterHolder.setStatusChoice(statusChoices.getValue());
         propertyFilterHolder.setIsCommented(isCommented.isSelected());
         propertyFilterHolder.setIsWifi(isWifi.isSelected());
         propertyFilterHolder.setIsFridge(isFridge.isSelected());
@@ -107,13 +99,11 @@ public class PropertyFilterController {
     @FXML
     private void populateData() {
         PropertyTypeStringConverter propertyTypeStringConverter = new PropertyTypeStringConverter();
-        IntegerFormatter integerFormatter = new IntegerFormatter();
         DoubleFormatter doubleFormatter1 = new DoubleFormatter();
         DoubleFormatter doubleFormatter2 = new DoubleFormatter();
 
         typeChoices.getItems().addAll(PropertyType.values());
         typeChoices.setConverter(propertyTypeStringConverter);
-        statusChoices.getItems().addAll(STATUSES);
         stateChoices.getItems().addAll(Utils.STATES);
         postcodeField.setTextFormatter(new PostcodeFormatter().getInstance());
         minRate.setTextFormatter(doubleFormatter1.getInstance());
@@ -124,7 +114,6 @@ public class PropertyFilterController {
         PropertyFilterHolder propertyFilterHolder = holder.getPropertyFilterHolder();
         if(propertyFilterHolder != null){
             typeChecked.setSelected(propertyFilterHolder.isTypeChecked());
-            statusChecked.setSelected(propertyFilterHolder.isStatusChecked());
             commentsChecked.setSelected(propertyFilterHolder.isCommentsChecked());
             facilitiesChecked.setSelected(propertyFilterHolder.isFacilitiesChecked());
             addressChecked.setSelected(propertyFilterHolder.isAddressChecked());
@@ -132,7 +121,6 @@ public class PropertyFilterController {
             maxRateChecked.setSelected(propertyFilterHolder.isMaxRateChecked());
             sortChecked.setSelected(propertyFilterHolder.isSortChecked());
             typeChoices.setValue(propertyFilterHolder.getTypeChoice());
-            statusChoices.setValue(propertyFilterHolder.getStatusChoice());
             isCommented.setSelected(propertyFilterHolder.isCommented());
             isWifi.setSelected(propertyFilterHolder.isWifi());
             isFridge.setSelected(propertyFilterHolder.isFridge());
@@ -149,27 +137,84 @@ public class PropertyFilterController {
         }
     }
 
-    public void onPropertyTypeCheck(MouseEvent mouseEvent) {
+    private void checkSorting() {
+        sortChoices.setDisable(!sortChecked.isSelected());
     }
 
-    public void onStatusCheck(MouseEvent mouseEvent) {
+    @FXML
+    private void onSortingCheck(MouseEvent mouseEvent) {
+        checkSorting();
     }
 
-    public void onCommentsCheck(MouseEvent mouseEvent) {
+    private void checkFacilities() {
+        isWifi.setDisable(!facilitiesChecked.isSelected());
+        isFridge.setDisable(!facilitiesChecked.isSelected());
+        isTv.setDisable(!facilitiesChecked.isSelected());
+        isAirCond.setDisable(!facilitiesChecked.isSelected());
+        isWaterHeater.setDisable(!facilitiesChecked.isSelected());
+        isSwimmingPool.setDisable(!facilitiesChecked.isSelected());
     }
 
-    public void onMinRateCheck(MouseEvent mouseEvent) {
+
+    @FXML
+    private void onFacilitiesCheck(MouseEvent mouseEvent) {
+        checkFacilities();
     }
 
-    public void onMaxRateCheck(MouseEvent mouseEvent) {
+    private void checkAddress() {
+        addressField.setDisable(!addressChecked.isSelected());
+        stateChoices.setDisable(!addressChecked.isSelected());
+        postcodeField.setDisable(!addressChecked.isSelected());
     }
 
-    public void onAddressCheck(MouseEvent mouseEvent) {
+    @FXML
+    private void onAddressCheck(MouseEvent mouseEvent) {
+        checkAddress();
     }
 
-    public void onFacilitiesCheck(MouseEvent mouseEvent) {
+    private void checkMinRate() {
+        minRate.setDisable(!minRateChecked.isSelected());
     }
 
-    public void onSortingCheck(MouseEvent mouseEvent) {
+    @FXML
+    private void onMinRateCheck(MouseEvent mouseEvent) {
+        checkMinRate();
+    }
+
+    private void checkMaxRate() {
+        maxRate.setDisable(!maxRateChecked.isSelected());
+    }
+
+    @FXML
+    private void onMaxRateCheck(MouseEvent mouseEvent) {
+        checkMaxRate();
+    }
+
+    private void checkComments() {
+        isCommented.setDisable(!commentsChecked.isSelected());
+    }
+
+    @FXML
+    private void onCommentsCheck(MouseEvent mouseEvent) {
+        checkComments();
+    }
+
+    private void checkPropertyType() {
+        typeChoices.setDisable(!typeChecked.isSelected());
+    }
+
+    @FXML
+    private void onPropertyTypeCheck(MouseEvent mouseEvent) {
+        checkPropertyType();
+    }
+
+    private void initCheck() {
+        checkPropertyType();
+        checkComments();
+        checkAddress();
+        checkMinRate();
+        checkMaxRate();
+        checkFacilities();
+        checkSorting();
     }
 }

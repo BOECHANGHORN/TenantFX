@@ -4,6 +4,8 @@ import AppHolder.*;
 import Property.*;
 import Property.PropertySearch.FacilitiesPicker;
 import Property.PropertySearch.PropertyFilterBuilder;
+import Role.Role;
+import Tenant.Tenant;
 import Utils.PropertyListener;
 import Utils.Utils;
 import com.app.main.Main;
@@ -64,6 +66,8 @@ public class ViewBoardController {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(propertyFilterDialogPane);
             dialog.setTitle(dialogTitle);
+            dialog.setX(event.getScreenX());
+            dialog.setY(event.getScreenY());
 
             Optional<ButtonType> clickedButton = dialog.showAndWait();
 
@@ -78,10 +82,14 @@ public class ViewBoardController {
     }
 
     private PropertyFilterBuilder getOwnPropertyFilterBuilder(){
+        Role currentUser = holder.getUser();
         PropertyFilterBuilder propertyFilterBuilder = new PropertyFilterBuilder();
-        propertyFilterBuilder.setAvailability(true).setPublished(true);
 
-        return propertyFilterBuilder;
+        if (currentUser == null) {
+            return propertyFilterBuilder;
+        }
+
+        return propertyFilterBuilder.setTenatOpt((Tenant) currentUser);
     }
 
     private ArrayList<Property> filterPropertyList() {
@@ -91,7 +99,7 @@ public class ViewBoardController {
             propertyFilterBuilder.setType(propertyFilterHolder.getTypeChoice());
         }
         if (propertyFilterHolder.isStatusChecked() && propertyFilterHolder.getStatusChoice() != null) {
-            boolean isAvailable = propertyFilterHolder.getStatusChoice() == Utils.ACTIVE;
+            boolean isAvailable = propertyFilterHolder.getStatusChoice().equals(Utils.ACTIVE);
             propertyFilterBuilder.setAvailability(isAvailable);
         }
         if (propertyFilterHolder.isCommentsChecked()) {
@@ -120,12 +128,11 @@ public class ViewBoardController {
             propertyFilterBuilder.setRentalUpBound(doubleMaxRate);
         }
         if(propertyFilterHolder.isSortChecked() && propertyFilterHolder.getSortChoice()!= null){
-            boolean isSortedByLowestFirst = propertyFilterHolder.getSortChoice() == Utils.LOWEST_FIRST;
+            boolean isSortedByLowestFirst = propertyFilterHolder.getSortChoice().equals(Utils.LOWEST_FIRST);
             propertyFilterBuilder.setSorted(isSortedByLowestFirst);
         }
 
-        ArrayList<Property> filteredPropertyList = propertyFilterBuilder.build().getResult();
-        return filteredPropertyList;
+        return propertyFilterBuilder.build().getResult();
 
     }
 
