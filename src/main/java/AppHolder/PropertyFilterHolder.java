@@ -12,8 +12,8 @@ public class PropertyFilterHolder {
     private boolean minRateChecked;
     private boolean maxRateChecked;
     private boolean sortChecked;
-    private PropertyType typeChoice;;
-    private String statusChoice;;
+    private PropertyType typeChoice;
+    private String statusChoice;
     private boolean isCommented;
     private boolean isWifi;
     private boolean isFridge;
@@ -21,9 +21,9 @@ public class PropertyFilterHolder {
     private boolean isAirCond;
     private boolean isWaterHeater;
     private boolean isSwimmingPool;
-    private String addressField ;
-    private String stateChoice ;;
-    private String postcodeField ;;
+    private String addressField;
+    private String stateChoice;
+    private String postcodeField;
     private String minRate;
     private String maxRate;
     private String sortChoice;

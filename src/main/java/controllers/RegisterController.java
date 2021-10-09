@@ -3,7 +3,8 @@ package controllers;
 import AppHolder.AppHolder;
 import Phone.Phone;
 import Role.RoleDatabase;
-import Tenant.*;
+import Tenant.Tenant;
+import Tenant.TenantDatabase;
 import Utils.PhoneFormatter;
 import Utils.Utils;
 import javafx.fxml.FXML;
@@ -28,11 +29,11 @@ public class RegisterController {
     }
 
     @FXML
-    private void onRegister(MouseEvent mouseEvent) throws IOException{
+    private void onRegister(MouseEvent mouseEvent) throws IOException {
         if (isValid()) {
 
             String newUsername = usernameField.getText();
-            if (RoleDatabase.isUserExist(newUsername))  {
+            if (RoleDatabase.isUserExist(newUsername)) {
                 Utils.showAlert("User name has been taken", false, mouseEvent);
                 return;
             }

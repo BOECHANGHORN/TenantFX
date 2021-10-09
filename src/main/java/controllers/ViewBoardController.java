@@ -1,7 +1,9 @@
 package controllers;
 
-import AppHolder.*;
-import Property.*;
+import AppHolder.AppHolder;
+import AppHolder.PropertyFilterHolder;
+import Property.Property;
+import Property.PropertyAddress;
 import Property.PropertySearch.FacilitiesPicker;
 import Property.PropertySearch.PropertyFilterBuilder;
 import Role.Role;
@@ -81,7 +83,7 @@ public class ViewBoardController {
         }
     }
 
-    private PropertyFilterBuilder getOwnPropertyFilterBuilder(){
+    private PropertyFilterBuilder getOwnPropertyFilterBuilder() {
         Role currentUser = holder.getUser();
         PropertyFilterBuilder propertyFilterBuilder = new PropertyFilterBuilder();
 
@@ -89,7 +91,7 @@ public class ViewBoardController {
             return propertyFilterBuilder;
         }
 
-        return propertyFilterBuilder.setTenatOpt((Tenant) currentUser);
+        return propertyFilterBuilder.setTenantOpt((Tenant) currentUser);
     }
 
     private ArrayList<Property> filterPropertyList() {
@@ -127,9 +129,9 @@ public class ViewBoardController {
             double doubleMaxRate = Double.parseDouble(propertyFilterHolder.getMaxRate());
             propertyFilterBuilder.setRentalUpBound(doubleMaxRate);
         }
-        if(propertyFilterHolder.isSortChecked() && propertyFilterHolder.getSortChoice()!= null){
+        if (propertyFilterHolder.isSortChecked() && propertyFilterHolder.getSortChoice() != null) {
             boolean isSortedByLowestFirst = propertyFilterHolder.getSortChoice().equals(Utils.LOWEST_FIRST);
-            propertyFilterBuilder.setSorted(isSortedByLowestFirst);
+            propertyFilterBuilder.setAscending(isSortedByLowestFirst);
         }
 
         return propertyFilterBuilder.build().getResult();
@@ -161,7 +163,7 @@ public class ViewBoardController {
                     GridPane.setMargin(anchorPane, new Insets(10));
                     row++;
                 }
-            }else{
+            } else {
                 Label msg = new Label();
                 msg.setText("No result found.");
                 msg.setFont(new Font("System", 20));
