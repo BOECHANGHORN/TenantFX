@@ -135,10 +135,6 @@ public class ViewBoardController {
         if (propertyFilterHolder.isTypeChecked() && propertyFilterHolder.getTypeChoice() != null) {
             propertyFilterBuilder.setType(propertyFilterHolder.getTypeChoice());
         }
-        if (propertyFilterHolder.isStatusChecked() && propertyFilterHolder.getStatusChoice() != null) {
-            boolean isAvailable = propertyFilterHolder.getStatusChoice().equals(Utils.ACTIVE);
-            propertyFilterBuilder.setAvailability(isAvailable);
-        }
         if (propertyFilterHolder.isCommentsChecked()) {
             propertyFilterBuilder.setComment(propertyFilterHolder.isCommented());
         }
