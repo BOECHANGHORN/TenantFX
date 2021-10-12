@@ -28,6 +28,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * <h1>ViewBoardController Class</h1>
+ * The ViewBoardController class is a controller class that
+ * connect the ViewBoard screen with the models
+ *
+ * @author Boe Chang Horn
+ * @version 1.0
+ * @since 2021-10-12
+ */
 public class ViewBoardController {
 
     @FXML
@@ -36,6 +45,12 @@ public class ViewBoardController {
     ArrayList<Property> ownedPropertyList;
     AppHolder holder = AppHolder.getInstance();
 
+    /**
+     * A private method that will be triggered when
+     * the scene initializes and displays property list
+     * based on the presence of PropertyFilterHolder object
+     * that stored in AppHolder instance
+     */
     @FXML
     private void initialize() {
         // Show Property List owned by current owner/agent
@@ -49,12 +64,20 @@ public class ViewBoardController {
         }
     }
 
+    /**
+     * A private method that clears the PropertyFilterHolder object data
+     * and displays original property list
+     */
     @FXML
     void onClearFilter() {
         holder.setPropertyFilterHolder(null);
         displayPropertyList(this.ownedPropertyList);
     }
 
+    /**
+     * A private method that load the PropertyFilter.fxml and open
+     * filters dialog
+     */
     @FXML
     void onOpenFilterDialog(MouseEvent event) {
         String dialogTitle = "Filter Property List";
@@ -83,6 +106,12 @@ public class ViewBoardController {
         }
     }
 
+    /**
+     * A private method that build up the property filter
+     * based on current user role
+     *
+     * @return PropertyFilterBuilder object
+     */
     private PropertyFilterBuilder getOwnPropertyFilterBuilder() {
         Role currentUser = holder.getUser();
         PropertyFilterBuilder propertyFilterBuilder = new PropertyFilterBuilder();
@@ -94,6 +123,12 @@ public class ViewBoardController {
         return propertyFilterBuilder.setTenantOpt((Tenant) currentUser);
     }
 
+    /**
+     * A private method that filters the property list
+     * based on PropertyFilterHolder object data
+     *
+     * @return arraylist of Property object
+     */
     private ArrayList<Property> filterPropertyList() {
         PropertyFilterHolder propertyFilterHolder = holder.getPropertyFilterHolder();
         PropertyFilterBuilder propertyFilterBuilder = getOwnPropertyFilterBuilder();
@@ -138,6 +173,12 @@ public class ViewBoardController {
 
     }
 
+    /**
+     * A private method that displays all the property objects
+     * by loading PropertyRow component
+     *
+     * @param propertyList the arraylist of Property object
+     */
     private void displayPropertyList(ArrayList<Property> propertyList) {
         int row = 0;
         grid.getChildren().clear();
@@ -176,16 +217,31 @@ public class ViewBoardController {
 
     }
 
+    /**
+     * A private method that initializes ViewBoard scene
+     *
+     * @param mouseEvent the mouse event
+     */
     @FXML
     private void onClickHomeBtn(MouseEvent mouseEvent) throws IOException {
         Main.goToViewBoardPage();
     }
 
+    /**
+     * A private method that initializes EditProfile scene
+     *
+     * @param mouseEvent the mouse event
+     */
     @FXML
     private void onClickProfileBtn(MouseEvent mouseEvent) throws IOException {
         Main.goToEditProfilePage();
     }
 
+    /**
+     * A private method that initializes Login scene
+     *
+     * @param mouseEvent the mouse event
+     */
     @FXML
     private void onLogout(MouseEvent mouseEvent) throws IOException {
         Main.goToLoginPage();
