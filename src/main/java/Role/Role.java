@@ -5,6 +5,8 @@ import Owner.Owner;
 import Phone.Phone;
 import Tenant.Tenant;
 
+import java.io.Serializable;
+
 /**
  * <h1>Role Class</h1>
  * The Role class is an abstract model class stores
@@ -14,7 +16,7 @@ import Tenant.Tenant;
  * @version 1.0
  * @since 2021 -10-08
  */
-public abstract class Role {
+public abstract class Role implements Serializable {
     private String role;
     private int id;
     private String userName;
