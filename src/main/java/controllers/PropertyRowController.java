@@ -1,7 +1,8 @@
 package controllers;
 
 import Property.Property;
-import Utils.*;
+import Utils.PropertyListener;
+import Utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 

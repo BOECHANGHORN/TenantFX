@@ -2,11 +2,16 @@ package Property.PropertySearch;
 
 import Agent.Agent;
 import Owner.Owner;
-import Property.*;
+import Property.Property;
+import Property.PropertyAddress;
+import Property.PropertyDatabase;
+import Property.PropertyType;
 import Tenant.Tenant;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedList;
 
 /**
  * <h1>PropertyFilter Class</h1>
@@ -19,7 +24,7 @@ import java.util.*;
  * @since 2021 -10-08
  */
 public class PropertyFilter {
-    private LinkedList<Property> properties;
+    private final LinkedList<Property> properties;
 
     /**
      * Instantiates a new Property filter from PropertyFilter builder class
@@ -37,7 +42,7 @@ public class PropertyFilter {
         if (psb.getOwner() != null) filterOwner(psb.getOwner());
         if (psb.getAgent() != null) filterAgent(psb.getAgent());
         if (psb.getTenant() != null) filterTenant(psb.getTenant());
-        if (psb.getTenatOpt() != null) filterTenantOpt(psb.getTenatOpt());
+        if (psb.getTenantOpt() != null) filterTenantOpt(psb.getTenantOpt());
         if (psb.isAvailability() != null) filterStatus(psb.isAvailability());
         if (psb.isComment() != null) filterComment(psb.isComment());
         if (psb.getFacilitiesPicker() != null) filterFacilitiesPicker(psb.getFacilitiesPicker());
@@ -45,7 +50,7 @@ public class PropertyFilter {
         if (psb.getRentalLowBound() != null) filterLowBound(psb.getRentalLowBound());
         if (psb.getRentalUpBound() != null) filterUpBound(psb.getRentalUpBound());
         if (psb.getPublished() != null) filterPublished(psb.getPublished());
-        if (psb.getSorted() != null) filterSorted(psb.getSorted());
+        if (psb.getAscending() != null) filterAscending(psb.getAscending());
     }
 
     /**
@@ -193,10 +198,10 @@ public class PropertyFilter {
     /**
      * sort properties by price
      *
-     * @param sorted true for ascending else descending
+     * @param ascending true for ascending else descending
      */
-    private void filterSorted(Boolean sorted) {
-        int isPositive = sorted ? 1 : -1;
+    private void filterAscending(Boolean ascending) {
+        int isPositive = ascending ? 1 : -1;
         properties.sort(
                 Comparator.comparingDouble((Property p) -> p.getRate() * isPositive)
         );

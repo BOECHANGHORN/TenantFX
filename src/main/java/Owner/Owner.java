@@ -33,11 +33,6 @@ public class Owner extends Role {
      * @return String of username
      */
     @Override
-    public String getUserName() {
-        return super.getUserName();
-    }
-
-    @Override
     public String toString() {
         return "Owner{" +
                 "id=" + super.getId() +

@@ -2,12 +2,13 @@ package controllers;
 
 import AppHolder.AppHolder;
 import Phone.Phone;
-import Role.*;
+import Role.Role;
+import Role.RoleDatabase;
 import Utils.PhoneFormatter;
 import Utils.Utils;
 import com.app.main.Main;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class EditProfileController {
     @FXML
     private TextField phoneNoField;
 
-    private Role currentUser = AppHolder.getInstance().getUser();
+    private final Role currentUser = AppHolder.getInstance().getUser();
 
     /**
      * A private method that will be triggered when
@@ -58,7 +59,7 @@ public class EditProfileController {
         String newPassword = passwordField.getText();
         String newPhoneNo = phoneNoField.getText();
 
-        if (!currentUsername.equals(newUsername) && RoleDatabase.isUserExist(newUsername))  {
+        if (!currentUsername.equals(newUsername) && RoleDatabase.isUserExist(newUsername)) {
             Utils.showAlert("User name has been taken", false, mouseEvent);
             return;
         }

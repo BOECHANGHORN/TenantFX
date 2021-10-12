@@ -1,7 +1,8 @@
 package controllers;
 
 import AppHolder.AppHolder;
-import Role.*;
+import Role.Role;
+import Role.RoleDatabase;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -75,7 +76,7 @@ public class LoginController {
         String role = getUser.getRole();
         String password = getUser.getPassword();
 
-        if(!role.equals("Tenant")) {
+        if (!role.equals("Tenant")) {
             msg.setText("Wrong software. For Tenant only");
             return;
         }
