@@ -4,8 +4,16 @@ import Property.Property;
 import Utils.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
+/**
+ * <h1>PropertyRowController Class</h1>
+ * The PropertyRowController class is a controller class that
+ * aids in controlling the PropertyRow component
+ *
+ * @author Boe Chang Horn
+ * @version 1.0
+ * @since 2021-10-12
+ */
 public class PropertyRowController {
     @FXML
     private Label nameLabel;
@@ -41,6 +49,13 @@ public class PropertyRowController {
     private Property property;
     private PropertyListener myListener;
 
+    /**
+     * A public method that populate the PropertyRow component inputs
+     * by using the selected property object
+     *
+     * @param property the selected property,
+     * @param myListener the PropertyListener
+     */
     public void setData(Property property, PropertyListener myListener) {
         this.property = property;
         this.myListener = myListener;
