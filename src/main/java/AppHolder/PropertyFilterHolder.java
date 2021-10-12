@@ -8,14 +8,13 @@ import Property.PropertyType;
  * The PropertyFilterHolder class is a model class that store t
  * the data fields of PropertyFilterHolder
  *
- * @author Chan Yun Hong
+ * @author Boe Chang Horn
  * @version 1.0
- * @since 2021-10-10
+ * @since 2021-10-12
  */
 
 public class PropertyFilterHolder {
     private boolean typeChecked;
-    private boolean statusChecked;
     private boolean commentsChecked;
     private boolean facilitiesChecked;
     private boolean addressChecked;
@@ -23,7 +22,6 @@ public class PropertyFilterHolder {
     private boolean maxRateChecked;
     private boolean sortChecked;
     private PropertyType typeChoice;
-    private String statusChoice;
     private boolean isCommented;
     private boolean isWifi;
     private boolean isFridge;
@@ -126,24 +124,6 @@ public class PropertyFilterHolder {
      */
     public void setTypeChecked(boolean typeChecked) {
         this.typeChecked = typeChecked;
-    }
-
-    /**
-     * Gets statusChecked.
-     *
-     * @return the statusChecked
-     */
-    public boolean isStatusChecked() {
-        return statusChecked;
-    }
-
-    /**
-     * Sets statusChecked.
-     *
-     * @param statusChecked the statusChecked
-     */
-    public void setStatusChecked(boolean statusChecked) {
-        this.statusChecked = statusChecked;
     }
 
     /**
@@ -252,24 +232,6 @@ public class PropertyFilterHolder {
      */
     public void setTypeChoice(PropertyType typeChoice) {
         this.typeChoice = typeChoice;
-    }
-
-    /**
-     * Gets status choice.
-     *
-     * @return the status choice
-     */
-    public String getStatusChoice() {
-        return statusChoice;
-    }
-
-    /**
-     * Sets status choice.
-     *
-     * @param statusChoice the status choice
-     */
-    public void setStatusChoice(String statusChoice) {
-        this.statusChoice = statusChoice;
     }
 
     /**
