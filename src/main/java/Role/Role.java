@@ -4,6 +4,7 @@ import Agent.Agent;
 import Owner.Owner;
 import Phone.Phone;
 import Tenant.Tenant;
+import Admin.Admin;
 
 import java.io.Serializable;
 
@@ -59,9 +60,9 @@ public abstract class Role implements Serializable {
             case "Tenant":
                 return new Tenant(id, userName, password, phone);
             default:
-                return null;
+                return new Admin(id, userName, password, phone);
         }
-        //  return new Admin(id, userName, password, phone);
+        //
     }
 
     /**
